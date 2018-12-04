@@ -4,7 +4,10 @@ module.exports = {
 
     mode: 'development',
 
-    entry: path.join(__dirname, '../App.js'),
+    entry: [
+        'react-hot-loader/patch',
+        path.join(__dirname, '../App.js')
+    ],
 
     output: {
         path: path.join(__dirname, '../dist'),
@@ -14,9 +17,19 @@ module.exports = {
     module: {
         rules: [
             {
-                test: '/\.js$/',
+                test: /\.js$/,
                 use: ['babel-loader?cacheDirectory=true']
+            },
+            {
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader']
             }
         ]
+    },
+
+    devServer: {
+        contentBase: path.join(__dirname, '../dist'),
+        historyApiFallback: true,
+        host: '0.0.0.0'
     }
 }
